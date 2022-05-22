@@ -15,5 +15,5 @@ windows_ram: 6048
 windows_cpus: 4
 
 ## CHOOSE YOUR CNI ($)
-# cni: "calico" || "antrea"
+# cni: "calico" || "antrea" || "none" - useful for winkernel tests without any CNI in the back
 cni: "antrea"
