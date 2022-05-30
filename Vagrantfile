@@ -44,7 +44,9 @@ Vagrant.configure(2) do |config|
     # dont run as priveliged cuz we need the kubeconfig from regular user
     if cni == "calico" then
       controlplane.vm.provision "shell", path: "sync/linux/calico-0.sh"
-    else
+    end
+
+    if cni == "antrea" then
       controlplane.vm.provision "shell", path: "sync/linux/antrea-0.sh"
     end
   end
@@ -80,7 +82,8 @@ Vagrant.configure(2) do |config|
           # installs both felix and node
           winw1.vm.provision "shell", path: "sync/windows/0-calico.ps1", privileged: true
           winw1.vm.provision "shell", path: "sync/windows/1-calico.ps1", privileged: true
-        else
+        end
+        if cni == "antrea" then
           winw1.vm.provision "shell", path: "sync/windows/0-antrea.ps1", privileged: true #, run: "always"
           winw1.vm.provision "shell", path: "sync/windows/1-antrea.ps1", privileged: true, args: "#{windows_node_ip}" #, run: "always"
         end
